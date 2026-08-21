@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lighter — Shuttered Light</title>
+<meta name="description" content="劉邦翊 L1ghter — 攝影 × 設計 × 程式的跨領域創作者。Shuttered Light 截光。">
+<!-- 分享預覽（部署後把 og:url / og:image 換成完整網址，例如 https://你的網域/images/og-image.jpg） -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lighter — Shuttered Light">
+<meta property="og:description" content="攝影 × 設計 × 程式的跨領域創作者。劉邦翊 L1ghter。">
+<meta property="og:image" content="images/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lighter — Shuttered Light">
+<meta name="twitter:description" content="攝影 × 設計 × 程式的跨領域創作者。劉邦翊 L1ghter。">
+<meta name="twitter:image" content="images/og-image.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230E1F1F'/><text x='50' y='68' font-family='Georgia,serif' font-size='52' fill='%232E9A9A' text-anchor='middle'>LT</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Noto+Serif+TC:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0E1F1F; --teal:#1B4B4B; --teal-bright:#2E9A9A;
+  --gold:#E0A96D; --paper:#F4F1EA; --slate:#6B7A78;
+  --line:rgba(244,241,234,.14); --line-strong:rgba(244,241,234,.28);
+  --fg:#E7ECEA; --fg-dim:#AEBAB7;
+  --serif-en:"Playfair Display",Georgia,"Noto Serif TC",serif;
+  --serif-tc:"Noto Serif TC",Georgia,serif;
+  --sans:"Noto Sans TC","Helvetica Neue",-apple-system,sans-serif;
+  --maxw:min(1360px, 92vw);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; background:var(--ink); color:var(--fg); font-family:var(--sans); font-weight:300; line-height:1.8; -webkit-font-smoothing:antialiased; letter-spacing:.01em; overflow-x:hidden}
+body::after{content:""; position:fixed; inset:0; z-index:9999; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit; text-decoration:none}
+img{display:block; max-width:100%}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 clamp(22px,5vw,64px)}
+section{padding:clamp(80px,11vw,150px) 0; position:relative}
+.smallcaps{font-weight:400; text-transform:uppercase; letter-spacing:.34em; font-size:12px; color:var(--fg-dim)}
+.section-label{display:flex; align-items:center; gap:18px; margin-bottom:46px}
+.section-label .num{font-family:var(--serif-en); font-weight:500; font-size:15px; color:var(--gold)}
+.section-label .rule{flex:1; height:1px; background:var(--line)}
+
+/* nav */
+header{position:fixed; top:0; left:0; right:0; z-index:50; border-bottom:1px solid transparent; transition:background .4s, border-color .4s}
+header.solid{background:rgba(9,20,20,.8); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.nav{max-width:min(1720px,96vw); margin:0 auto; padding:20px clamp(26px,5vw,72px); display:flex; align-items:center; justify-content:space-between}
+.brand{display:flex; align-items:baseline; gap:12px}
+.brand .lt{font-family:var(--serif-en); font-weight:600; font-size:22px; color:var(--teal-bright); letter-spacing:.02em}
+.brand .nm{text-transform:uppercase; letter-spacing:.28em; font-size:12px; color:var(--fg)}
+.nav ul{display:flex; gap:34px; list-style:none; margin:0; padding:0}
+.nav ul a{font-size:15px; font-weight:400; letter-spacing:.12em; color:var(--fg); transition:color .25s}
+.nav ul a:hover{color:var(--teal-bright)}
+.nav-toggle{display:none; flex-direction:column; justify-content:center; gap:6px; width:34px; height:34px; background:transparent; border:0; cursor:pointer; padding:0; z-index:60}
+.nav-toggle span{display:block; width:26px; height:1.5px; background:var(--fg); transition:transform .3s, opacity .3s}
+.nav-toggle.open span:nth-child(1){transform:translateY(3.75px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){transform:translateY(-3.75px) rotate(-45deg)}
+.nav-mobile{position:fixed; top:0; right:0; height:100%; width:min(216px,66vw); z-index:48; background:rgba(9,20,20,.62); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-left:1px solid var(--line); padding:88px 0 30px; display:flex; flex-direction:column; gap:2px; transform:translateX(100%); transition:transform .42s cubic-bezier(.2,.7,.2,1); box-shadow:-18px 0 55px rgba(0,0,0,.4)}
+.nav-mobile.open{transform:none}
+.nav-mobile a{display:flex; align-items:center; justify-content:center; gap:12px; padding:13px 20px; font-family:var(--serif-tc); font-weight:400; font-size:16px; letter-spacing:.12em; color:var(--paper)}
+.nav-mobile a svg{width:18px; height:18px; fill:none; stroke:var(--teal-bright); stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; opacity:.85; flex:none}
+.nav-mobile a:active{background:rgba(46,154,154,.16)}
+#page{transition:transform .42s cubic-bezier(.2,.7,.2,1)}
+@media(max-width:760px){ .nav ul{display:none} .nav-toggle{display:flex} html.menu-open{overflow:hidden} html.menu-open #page{transform:translateX(-18px)} }
+@media(min-width:761px){ .nav-mobile{display:none} }
+
+/* hero — full-bleed cinematic */
+.hero{position:relative; min-height:100vh; display:flex; align-items:flex-end; overflow:hidden; padding:0}
+.hero-bg{position:absolute; inset:0; z-index:0; background-size:cover; background-position:center;
+  background-image:url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDPXQyekqfnT/7AfGfMX86yY7iUfxn86k+1TY/1jfnQBdk0KTsyn8aKoNdzD+M/nRQB/9k=")}
+.hero-bg img{width:100%; height:100%; object-fit:cover; object-position:center; filter:contrast(1.05) saturate(1.04); opacity:0; transition:opacity .9s ease}
+.hero-bg img.loaded{opacity:1}
+.hero-bg::after{content:""; position:absolute; inset:0; background:
+  linear-gradient(95deg, rgba(8,18,18,.94) 0%, rgba(8,18,18,.66) 34%, rgba(8,18,18,.18) 64%, rgba(8,18,18,.42) 100%),
+  linear-gradient(0deg, rgba(8,18,18,.92) 0%, rgba(8,18,18,.22) 38%, rgba(8,18,18,0) 66%)}
+.hero-inner{position:relative; z-index:1; width:100%; max-width:var(--maxw); margin:0 auto; padding:0 clamp(22px,5vw,64px) clamp(72px,12vh,132px)}
+.hero-eyebrow{margin-bottom:26px}
+.hero h1{font-family:var(--serif-en); font-weight:400; line-height:.98; margin:0; font-size:clamp(58px,11vw,150px); letter-spacing:.1em; color:var(--paper); white-space:nowrap; text-shadow:0 2px 40px rgba(0,0,0,.5)}
+.hero h1 .b{color:var(--teal-bright)}
+.hero .zh-name{font-family:var(--serif-tc); font-weight:400; letter-spacing:.5em; font-size:clamp(15px,2.4vw,20px); color:var(--fg); margin:22px 0 0 4px}
+.hero .tagline{font-family:var(--serif-tc); font-weight:300; font-size:clamp(16px,2.2vw,20px); color:var(--fg); line-height:1.9; margin:26px 0 0; max-width:32ch; text-shadow:0 1px 20px rgba(0,0,0,.6)}
+.hero .tagline b{font-weight:500; color:var(--paper)}
+.hero .roles{display:flex; gap:14px; align-items:center; margin-top:30px; flex-wrap:wrap}
+.hero .roles span{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--fg)}
+.hero .roles i{width:5px; height:5px; border-radius:50%; background:var(--gold); display:inline-block}
+.hero-cta{display:flex; gap:16px; margin-top:40px; flex-wrap:wrap}
+.btn{font-size:13px; letter-spacing:.14em; text-transform:uppercase; padding:14px 26px; border-radius:9px; transition:all .25s; display:inline-flex; align-items:center; gap:10px}
+.btn-solid{background:var(--teal-bright); color:#04110f; font-weight:500}
+.btn-solid:hover{background:#3bb3b3}
+.btn-ghost{border:1px solid rgba(244,241,234,.4); color:var(--paper); backdrop-filter:blur(2px)}
+.btn-ghost:hover{border-color:var(--teal-bright); color:var(--teal-bright)}
+.hero-bg{will-change:transform}
+.hero-fade{position:absolute; left:0; right:0; bottom:-1px; height:40%; z-index:1; pointer-events:none;
+  background:linear-gradient(to bottom, rgba(10,21,23,0) 0%, rgba(10,21,23,.55) 52%, #0A1517 100%)}
+@media(max-width:820px){
+  .hero h1{font-size:clamp(46px,15vw,86px); white-space:normal}
+}
+
+/* about */
+.about-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(34px,6vw,80px); align-items:center}
+.about-figs{display:flex; flex-direction:column; gap:16px}
+.af{position:relative; padding:10px; margin:0; cursor:zoom-in}
+.af::before{content:""; position:absolute; inset:0; border:1px solid var(--line); transition:border-color .4s; z-index:1}
+.af:hover::before{border-color:var(--line-strong)}
+.af img{width:100%; aspect-ratio:16/10; object-fit:cover; filter:contrast(1.03)}
+.af-cap{color:var(--slate); font-size:13px; margin-top:2px; letter-spacing:.08em}
+.about-body .kick{font-family:var(--serif-en); font-weight:500; letter-spacing:.2em; text-transform:uppercase; font-size:13px; color:var(--teal-bright); margin-bottom:18px}
+.about-body h2{font-family:var(--serif-tc); font-weight:500; font-size:clamp(30px,5vw,52px); line-height:1.25; margin:0 0 16px; color:var(--paper); letter-spacing:.04em}
+.about-body .sub{font-family:var(--serif-tc); font-weight:300; font-size:clamp(15px,2vw,18px); color:var(--fg-dim); margin:0 0 30px; line-height:1.8}
+.about-body p{color:var(--fg-dim); font-family:var(--serif-tc); font-weight:300; margin:0 0 18px; font-size:15.5px; line-height:1.95}
+.about-body p b{color:var(--fg); font-weight:500}
+.about-tags{display:flex; gap:10px; margin-top:30px; flex-wrap:wrap; padding:0}
+.about-tags li{list-style:none; font-size:12px; letter-spacing:.1em; color:var(--fg-dim); border:1px solid var(--line); padding:8px 14px; border-radius:7px}
+@media(max-width:820px){ .about-grid{grid-template-columns:1fr; gap:38px} }
+
+/* section head */
+.head{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:18px; margin-bottom:44px}
+.head h2{font-family:var(--serif-tc); font-weight:500; font-size:clamp(30px,5vw,50px); margin:0; color:var(--paper); letter-spacing:.08em}
+.head .en{font-family:var(--serif-en); font-weight:400; letter-spacing:.16em; color:var(--fg-dim); font-size:14px; margin-top:12px; text-transform:uppercase}
+.head .en b{color:var(--teal-bright); font-weight:500}
+.head .note{color:var(--slate); font-size:14px; max-width:26ch; text-align:right; line-height:1.8}
+
+/* photography — masonry (fewer, larger tiles; near-flush bottom) */
+.pmasonry{columns:3; column-gap:18px}
+@media(max-width:960px){ .pmasonry{columns:2} }
+@media(max-width:600px){ .pmasonry{columns:1} }
+.pmasonry .m{position:relative; overflow:hidden; background:#081414; break-inside:avoid; margin-bottom:18px; width:100%}
+.pmasonry .m img{width:100%; height:auto; display:block; transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.pmasonry .m::after{content:""; position:absolute; inset:0; border:1px solid transparent; transition:border-color .4s}
+.pmasonry .m:hover img{transform:scale(1.05)}
+.pmasonry .m:hover::after{border-color:var(--line-strong)}
+/* JS-built balanced columns (even bottom) override the CSS-columns fallback */
+.pmasonry.js{columns:auto; display:flex; gap:18px; align-items:flex-start}
+.pmasonry.js .mcol{flex:1; min-width:0; display:flex; flex-direction:column; gap:18px}
+.pmasonry.js .m{margin-bottom:0}
+.pfilter{display:flex; gap:10px}
+.pf{font-family:var(--sans); font-size:13px; letter-spacing:.12em; color:var(--fg-dim); background:transparent; border:1px solid var(--line); padding:9px 18px; border-radius:8px; cursor:pointer; transition:all .25s}
+.pf:hover{color:var(--fg); border-color:var(--line-strong)}
+.pf.active{color:#04110f; background:var(--teal-bright); border-color:var(--teal-bright); font-weight:500}
+.more-link{margin-top:44px; text-align:center}
+.more-link a{font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--fg-dim); border-bottom:1px solid var(--line); padding-bottom:6px; transition:.25s}
+.more-link a:hover{color:var(--teal-bright); border-color:var(--teal-bright)}
+
+/* award */
+.award-lead{max-width:62ch; margin-bottom:38px}
+.award-badge{display:inline-flex; align-items:center; gap:10px; margin-bottom:20px; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold)}
+.award-badge::before{content:""; width:26px; height:1px; background:var(--gold)}
+.award-title{font-family:var(--serif-tc); font-weight:500; font-size:clamp(22px,3.2vw,30px); color:var(--paper); letter-spacing:.06em; margin:0 0 20px}
+.award-lead p{color:var(--fg-dim); font-family:var(--serif-tc); font-weight:300; font-size:16px; line-height:2.05; margin:0}
+.award-lead .q{color:var(--fg); border-left:2px solid var(--teal-bright); padding-left:18px; margin-bottom:18px; display:block}
+.agrid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.award-hint{color:var(--teal-bright); font-size:14px; letter-spacing:.08em; margin:20px 0 0}
+.agrid .ac{position:relative; overflow:hidden; background:#081414; cursor:zoom-in}
+.agrid img{width:100%; aspect-ratio:16/9; object-fit:cover; transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.agrid .ac::after{content:""; position:absolute; inset:0; border:1px solid transparent; transition:border-color .4s}
+.agrid .ac:hover img{transform:scale(1.04)}
+.agrid .ac:hover::after{border-color:var(--line-strong)}
+
+@media(max-width:700px){ .agrid{grid-template-columns:1fr} }
+
+/* ===== unified viewer (photo / award / design): enlarge + slide-in concept panel ===== */
+.vwr{position:fixed; inset:0; z-index:210; background:rgba(5,12,11,.95); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; padding:6vh 5vw; opacity:0; visibility:hidden; transition:opacity .4s ease, visibility .4s ease}
+.vwr.open{opacity:1; visibility:visible}
+.v-img{max-width:82%; max-height:84vh; object-fit:contain; box-shadow:0 24px 70px rgba(0,0,0,.55); transition:transform .5s cubic-bezier(.2,.7,.2,1), opacity .45s ease}
+.vwr:not(.open) .v-img{transform:scale(.96); opacity:0}
+@media(min-width:821px){ .vwr{padding-right:calc(min(430px,38vw) + 4vw)} }
+/* quarter-circle close button (top-right corner) */
+.lb-close{position:fixed; top:0; right:0; width:66px; height:66px; border-radius:0 0 0 100%; background:rgba(14,31,31,.82); backdrop-filter:blur(6px); display:flex; align-items:flex-start; justify-content:flex-end; padding:11px 15px 0 0; color:var(--fg-dim); font-family:"Times New Roman",Times,serif; font-size:19px; line-height:1; cursor:pointer; transition:all .25s; z-index:6}
+.lb-close:hover{color:var(--paper); background:rgba(46,154,154,.34)}
+.lb-nav{position:fixed; top:50%; transform:translateY(-50%); color:var(--fg-dim); font-family:var(--serif-en); font-size:40px; cursor:pointer; user-select:none; padding:16px 20px; transition:color .2s; z-index:4}
+.lb-nav:hover{color:var(--paper)}
+.lb-prev{left:1.5vw} .lb-next{right:1.5vw}
+.v-count{position:fixed; left:6vw; bottom:5vh; font-size:12px; letter-spacing:.18em; color:var(--slate); z-index:4}
+.v-panel{position:fixed; top:0; right:0; height:100%; width:min(430px,40vw); background:rgba(14,31,31,.72); backdrop-filter:blur(16px); padding:13vh 46px 44px; transform:translateX(100%); transition:transform .6s cubic-bezier(.2,.7,.2,1); overflow-y:auto; z-index:5}
+.vwr.open .v-panel{transform:translateX(0)}
+.v-panel::before{content:""; position:absolute; left:-72px; top:0; bottom:0; width:72px; background:linear-gradient(to right, rgba(14,31,31,0), rgba(14,31,31,.72)); pointer-events:none}
+.v-panel .badge{color:var(--gold); font-size:12px; letter-spacing:.2em; text-transform:uppercase; margin-bottom:22px; display:flex; gap:10px; align-items:center}
+.v-panel .badge::before{content:""; width:24px; height:1px; background:var(--gold)}
+.v-panel .title{font-family:var(--serif-tc); font-weight:500; font-size:clamp(23px,2.6vw,30px); color:var(--paper); line-height:1.45; letter-spacing:.06em; margin:0 0 6px}
+.v-panel .en{font-size:11px; letter-spacing:.26em; text-transform:uppercase; color:var(--slate); margin-bottom:24px}
+.v-panel .text{font-family:var(--serif-tc); font-weight:300; color:var(--fg); font-size:16px; line-height:2.1; margin:0}
+.v-panel .text b{color:var(--paper); font-weight:500}
+.v-panel .text .q{display:block; color:var(--paper); border-left:2px solid var(--teal-bright); padding-left:18px; margin-bottom:18px}
+.v-count{}
+@media(max-width:820px){
+  .vwr{justify-content:center; padding:3vh 3vw}
+  .v-img{max-width:92vw; max-height:44vh}
+  .v-panel{width:100%; height:auto; top:auto; bottom:0; padding:30px 26px 38px; transform:translateY(100%)}
+  .vwr.open .v-panel{transform:translateY(0)}
+  .v-panel::before{left:0; right:0; top:-56px; bottom:auto; width:auto; height:56px; background:linear-gradient(to bottom, rgba(14,31,31,0), rgba(14,31,31,.72))}
+  .lb-nav{font-size:30px; padding:10px}
+  .v-count{bottom:auto; top:3vh; left:5vw}
+}
+
+/* design — alternating feature rows */
+.drow{display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,5vw,68px); align-items:center; margin-bottom:clamp(56px,8vw,104px)}
+.drow:last-child{margin-bottom:0}
+.drow.flip .dfig{order:2}
+.dfig{position:relative; padding:14px; background:#0a1414; cursor:zoom-in}
+.dfig::before{content:""; position:absolute; inset:0; border:1px solid var(--line); transition:border-color .4s; z-index:1}
+.dfig:hover::before{border-color:var(--line-strong)}
+.dfig img{width:100%; height:auto; display:block}
+.dmeta .idx{font-family:var(--serif-en); font-weight:500; font-size:15px; color:var(--gold)}
+.dmeta .t{font-family:var(--serif-tc); font-weight:500; font-size:clamp(23px,3vw,30px); color:var(--paper); letter-spacing:.08em; margin:14px 0 4px}
+.dmeta .en{font-size:11px; letter-spacing:.26em; text-transform:uppercase; color:var(--slate)}
+.dmeta p{color:var(--fg-dim); font-family:var(--serif-tc); font-weight:300; font-size:15.5px; line-height:2; margin:22px 0 0}
+@media(max-width:760px){ .drow{grid-template-columns:1fr; gap:26px} .drow.flip .dfig{order:0} .dfig{max-width:440px} }
+
+/* video */
+.vgrid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,54px)}
+.vwrap{position:relative; display:block; padding-top:56.25%; overflow:hidden; background:#081414; border:1px solid var(--line)}
+.vwrap img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.vwrap:hover img{transform:scale(1.05)}
+.vwrap::after{content:""; position:absolute; inset:0; background:rgba(6,14,13,.30); transition:background .3s}
+.vwrap:hover::after{background:rgba(6,14,13,.14)}
+.vplay{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:70px; height:70px; border-radius:50%; background:rgba(14,31,31,.55); border:1px solid rgba(244,241,234,.55); z-index:2; transition:all .3s; backdrop-filter:blur(2px)}
+.vplay::before{content:""; position:absolute; left:54%; top:50%; transform:translate(-50%,-50%); border-style:solid; border-width:11px 0 11px 18px; border-color:transparent transparent transparent var(--paper)}
+.vwrap:hover .vplay{background:var(--teal-bright); border-color:var(--teal-bright); transform:translate(-50%,-50%) scale(1.08)}
+.vwrap:hover .vplay::before{border-left-color:#04110f}
+.vmeta .t{font-family:var(--serif-tc); font-weight:500; font-size:clamp(21px,2.6vw,26px); color:var(--paper); letter-spacing:.06em; margin-top:22px}
+.vmeta .en{font-size:11px; letter-spacing:.26em; text-transform:uppercase; color:var(--slate); margin-top:6px}
+.vmeta p{color:var(--fg-dim); font-family:var(--serif-tc); font-weight:300; font-size:15px; line-height:1.95; margin:16px 0 18px}
+.vlink{font-size:13px; letter-spacing:.12em; color:var(--teal-bright); border-bottom:1px solid var(--line); padding-bottom:5px; transition:.25s}
+.vlink:hover{border-color:var(--teal-bright)}
+@media(max-width:820px){ .vgrid{grid-template-columns:1fr; gap:46px} }
+
+/* craft */
+.craft-intro{max-width:44ch; margin-bottom:60px}
+.craft-intro p{font-family:var(--serif-tc); font-weight:300; font-size:clamp(19px,2.8vw,26px); line-height:1.75; color:var(--paper); margin:0}
+.craft-intro p .hl{color:var(--teal-bright)}
+.cols{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line)}
+.col{background:var(--ink); padding:clamp(28px,3.4vw,44px) clamp(24px,3vw,38px)}
+.col .idx{font-family:var(--serif-en); font-weight:500; font-size:16px; color:var(--gold)}
+.col h3{font-family:var(--serif-tc); font-weight:500; font-size:22px; color:var(--paper); margin:20px 0 6px; letter-spacing:.06em}
+.col .en{font-size:11px; letter-spacing:.26em; text-transform:uppercase; color:var(--slate); margin-bottom:22px}
+.col p{color:var(--fg-dim); font-family:var(--serif-tc); font-weight:300; font-size:15px; line-height:1.95; margin:0 0 20px}
+.col ul{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px}
+.col ul li{font-size:11px; letter-spacing:.1em; color:var(--fg-dim); border:1px solid var(--line); padding:6px 11px; border-radius:6px; text-transform:uppercase}
+@media(max-width:820px){ .cols{grid-template-columns:1fr} }
+
+/* contact */
+#contact{text-align:center}
+#contact .lead{font-family:var(--serif-en); font-weight:500; font-size:15px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:22px}
+#contact h2{font-family:var(--serif-tc); font-weight:400; font-size:clamp(21px,3.2vw,33px); line-height:1.55; margin:0 auto 14px; max-width:34ch; color:var(--paper); letter-spacing:.04em}
+#contact .sub{font-family:var(--serif-tc); font-weight:300; color:var(--fg-dim); max-width:34ch; margin:0 auto 46px; font-size:16px; line-height:2}
+.links{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:56px}
+.slogan-strip{font-family:var(--serif-tc); font-weight:300; font-size:clamp(15px,2.2vw,20px); color:var(--slate); letter-spacing:.14em}
+
+/* footer */
+footer{border-top:1px solid var(--line); padding:44px 0}
+.foot{max-width:var(--maxw); margin:0 auto; padding:0 clamp(22px,5vw,64px); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px}
+.foot .b{display:flex; align-items:baseline; gap:12px}
+.foot .b .lt{font-family:var(--serif-en); font-weight:600; font-size:19px; color:var(--teal-bright)}
+.foot .b .nm{text-transform:uppercase; letter-spacing:.28em; font-size:11px; color:var(--slate)}
+.foot .r{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate)}
+
+/* journey timeline */
+.timeline{position:relative; max-width:820px; margin-top:8px}
+.timeline::before{content:""; position:absolute; left:7px; top:8px; bottom:8px; width:1px; background:var(--line)}
+.tl-item{position:relative; padding:0 0 clamp(34px,5vw,54px) 52px}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::after{content:""; position:absolute; left:2px; top:5px; width:11px; height:11px; border-radius:50%; background:var(--ink); border:1px solid var(--teal-bright)}
+.tl-tick{position:absolute; left:14px; top:10px; width:30px; height:1px; background:var(--gold); opacity:.6}
+.tl-phase{font-family:var(--serif-en); font-weight:500; letter-spacing:.08em; font-size:13px; color:var(--gold); text-transform:uppercase}
+.tl-title{font-family:var(--serif-tc); font-weight:500; font-size:clamp(19px,2.4vw,24px); color:var(--paper); margin:5px 0 8px; letter-spacing:.05em}
+.tl-desc{font-family:var(--serif-tc); font-weight:300; color:var(--fg-dim); font-size:15px; line-height:1.9; max-width:54ch}
+
+/* reveal */
+.has-js .reveal{opacity:0; transform:translateY(26px); transition:opacity 1s ease, transform 1s cubic-bezier(.2,.7,.2,1)}
+.has-js .reveal.in{opacity:1; transform:none}
+@media(prefers-reduced-motion:reduce){.has-js .reveal{opacity:1; transform:none; transition:none}}
+</style>
+</head>
+<body>
+
+<header id="hd">
+  <nav class="nav">
+    <div class="brand"><span class="lt">LT</span><span class="nm">Shuttered&nbsp;Light</span></div>
+    <ul>
+      <li><a href="#about">關於</a></li>
+      <li><a href="#photo">攝影</a></li>
+      <li><a href="#award">得獎</a></li>
+      <li><a href="#design">設計</a></li>
+      <li><a href="#video">影音</a></li>
+      <li><a href="#journey">歷程</a></li>
+      <li><a href="#contact">聯絡</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="開啟選單" aria-expanded="false"><span></span><span></span></button>
+  </nav>
+</header>
+<nav class="nav-mobile" id="navMobile" aria-hidden="true">
+  <a href="#about"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6"/></svg><span>關於</span></a>
+  <a href="#photo"><svg viewBox="0 0 24 24"><path d="M4 8h3l1.4-2.4h7.2L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.3"/></svg><span>攝影</span></a>
+  <a href="#award"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13l-1.5 7L12 17l4.5 3L15 13"/></svg><span>得獎</span></a>
+  <a href="#design"><svg viewBox="0 0 24 24"><path d="M4 20l1-4L15.5 5.5l3 3L8 19z"/><path d="M13.5 7l3 3"/></svg><span>設計</span></a>
+  <a href="#video"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg><span>影音</span></a>
+  <a href="#journey"><svg viewBox="0 0 24 24"><path d="M12 3.5v17"/><circle cx="12" cy="6" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="18" r="1.7"/></svg><span>歷程</span></a>
+  <a href="#contact"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/></svg><span>聯絡</span></a>
+</nav>
+
+<div id="page">
+<!-- ========= HERO ========= -->
+<section class="hero" id="top" data-bg="#0E1F1F">
+  <div class="hero-bg"><img src="images/full/hero-main.jpg" alt="Shuttered Light — 為什麼天空中間不能是一條河" onload="this.classList.add('loaded')"></div>
+  <div class="hero-fade"></div>
+  <div class="hero-inner">
+    <div class="hero-copy reveal">
+      <div class="hero-eyebrow smallcaps">Photographer · Designer · Maker</div>
+      <h1><span class="a">LIGH</span><span class="b">TER</span></h1>
+      <div class="zh-name">劉 邦 翊</div>
+      <p class="tagline">用<b>光</b>說故事的跨領域創作者。在<b>攝影</b>、<b>設計</b>與<b>程式</b>之間，找一種能解決問題的方式。</p>
+      <div class="roles"><span>攝影</span><i></i><span>設計</span><i></i><span>程式</span></div>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="#photo">看作品</a>
+        <a class="btn btn-ghost" href="#about">關於我</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========= ABOUT ========= -->
+<section id="about" data-bg="#0A1517">
+  <div class="wrap">
+    <div class="section-label reveal"><span class="num">01</span><span class="smallcaps">About</span><span class="rule"></span></div>
+    <div class="about-grid">
+      <div class="about-figs reveal">
+        <figure class="af a"><img src="images/about-berlin2.jpg" alt="柏林 · 布蘭登堡門"></figure>
+        <figure class="af b"><img src="images/about-berlin.jpg" alt="柏林 · 街頭"></figure>
+        <figcaption class="af-cap">— 柏林，獨自生活的那一個月</figcaption>
+      </div>
+      <div class="about-body">
+        <div class="kick reveal">劉邦翊 · Lighter</div>
+        <h2 class="reveal">把一件事，<br>徹底做成。</h2>
+        <p class="sub reveal">這是華德福的自由、柏林的一個月，和無數次快門，教會我的事。</p>
+        <p class="reveal">我目前就讀<b>世新大學圖文傳播學系</b>，正準備升上二年級——一年級下學期拿下<b>系排第一</b>。攝影、設計與程式，是我把想法變成作品的三種語言。</p>
+        <p class="reveal">攝影始於一堂選修課。高二那年，我開始用鏡頭整理情緒，攝影從「記錄」變成我<b>說故事的方式</b>。</p>
+        <p class="reveal">我曾獨自前往<b>柏林</b>生活一個月，學習電影製作。起初的新鮮很快被孤獨與自我懷疑取代，直到我把這趟旅程重新定義為「學習與體驗」，一切才慢慢輕鬆起來。柏林教我的不只是電影——而是怎麼在完全陌生的地方，把自己安頓好、把想做的事完成。</p>
+        <p class="reveal">三條路看似不同，對我其實是同一件事的三種工具。我想成為一個<b>適合這個時代、能解決問題的全方位設計師</b>——說到底，一個想把事情做成的人。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========= PHOTOGRAPHY ========= -->
+<section id="photo" data-bg="#123032">
+  <div class="wrap">
+    <div class="section-label reveal"><span class="num">02</span><span class="smallcaps">Photography</span><span class="rule"></span></div>
+    <div class="head reveal">
+      <div><h2>攝影作品</h2><div class="en">Photography</div></div>
+      <div class="pfilter" id="pfilter">
+        <button class="pf active" data-cat="all">全部</button>
+        <button class="pf" data-cat="color">彩色</button>
+        <button class="pf" data-cat="bw">黑白</button>
+      </div>
+    </div>
+    <div class="pmasonry">
+      <!-- 彩色 -->
+      <div class="m reveal" data-cat="color"><img src="images/work-01.jpg" alt="街頭 — 藍傘"></div>
+      <div class="m reveal" data-cat="color"><img src="images/work-05.jpg" alt="祭典紅燈籠"></div>
+      <div class="m reveal" data-cat="color"><img src="images/work-04.jpg" alt="黃昏海邊群像"></div>
+      <div class="m reveal" data-cat="color"><img src="images/work-03.jpg" alt="海邊剪影"></div>
+      <div class="m reveal" data-cat="color"><img src="images/work-07.jpg" alt="京都五重塔"></div>
+      <div class="m reveal" data-cat="color"><img src="images/work-02.jpg" alt="黃昏父女剪影"></div>
+      <div class="m reveal" data-cat="color"><img src="images/work-06.jpg" alt="鳥居參道"></div>
+      <div class="m reveal" data-cat="color"><img src="images/work-08.jpg" alt="拱門框景城市"></div>
+      <div class="m reveal" data-cat="color"><img src="images/work-10.jpg" alt="街頭騎士"></div>
+      <div class="m reveal" data-cat="color"><img src="images/work-11.jpg" alt="建築幾何"></div>
+      <div class="m reveal" data-cat="color"><img src="images/work-12.jpg" alt="港口"></div>
+      <div class="m reveal" data-cat="color"><img src="images/work-09.jpg" alt="草叢中的攝影者"></div>
+      <!-- 黑白 -->
+      <div class="m reveal" data-cat="bw"><img src="images/photo/frag-01.jpg" alt="牽手剪影"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/frag-06.jpg" alt="逆光吉他手"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/f2-01.jpg" alt="街頭單車"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/frag-04.jpg" alt="海堤與燈塔"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/f2-02.jpg" alt="街頭雙人"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/bw-03.jpg" alt="窗框雙人剪影"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/f2-04.jpg" alt="月"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/frag-02.jpg" alt="街角單車"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/f2-03.jpg" alt="機車街景"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/bw-01.jpg" alt="隧道剪影"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/f2-05.jpg" alt="林蔭逆光"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/bw-07.jpg" alt="京都車站"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/frag-03.jpg" alt="海堤全景"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/f2-06.jpg" alt="城市街道"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/bw-02.jpg" alt="靜坐肖像"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/f2-08.jpg" alt="牆與人"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/bw-04.jpg" alt="地下道"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/frag-05.jpg" alt="夜裡的窗"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/f2-07.jpg" alt="巷弄"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/bw-05.jpg" alt="拱廊"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/bw-06.jpg" alt="城市邊緣"></div>
+      <div class="m reveal" data-cat="bw"><img src="images/photo/bw-08.jpg" alt="建築"></div>
+    </div>
+    <div class="more-link reveal"><a href="https://www.instagram.com/lighter__photography/" target="_blank" rel="noopener">更多影像作品 · Instagram</a></div>
+  </div>
+</section>
+
+<!-- ========= AWARD ========= -->
+<section id="award" data-bg="#04100E">
+  <div class="wrap">
+    <div class="section-label reveal"><span class="num">03</span><span class="smallcaps">Award</span><span class="rule"></span></div>
+    <div class="award-lead reveal">
+      <div class="award-badge">全國學生攝影比賽 · 大專組 金獎</div>
+      <h3 class="award-title">《為什麼天空中間不能是一條河》</h3>
+      <p>
+        <span class="q">「如果天空平常是藍色的，河流也是；日出日落時，天空映照出的顏色也渲染在河面上。那，天空中間為什麼不能是一條河？」</span>
+        本作品以此發想，利用多重曝光與疊圖的技巧，將城市剪影、眷村小屋都成了河岸；絢麗的天空則成了河流。至此，天地反轉的世界裡，流過了一條河。
+      </p>
+    </div>
+    <div class="agrid">
+      <div class="ac reveal"><img src="images/award/river-01.jpg" alt="為什麼天空中間不能是一條河 01"></div>
+      <div class="ac reveal"><img src="images/award/river-02.jpg" alt="為什麼天空中間不能是一條河 02"></div>
+      <div class="ac reveal"><img src="images/award/river-03.jpg" alt="為什麼天空中間不能是一條河 03"></div>
+      <div class="ac reveal"><img src="images/award/river-04.jpg" alt="為什麼天空中間不能是一條河 04"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========= DESIGN ========= -->
+<section id="design" data-bg="#183A36">
+  <div class="wrap">
+    <div class="section-label reveal"><span class="num">04</span><span class="smallcaps">Design</span><span class="rule"></span></div>
+    <div class="head reveal">
+      <div>
+        <h2>設計作品</h2>
+        <div class="en">Graphic <b>Design</b></div>
+      </div>
+    </div>
+
+    <div class="drow">
+      <figure class="dfig reveal"><img src="images/design/dushan.jpg" alt="獨善其身 EGOCENTRIC 設計海報"></figure>
+      <div class="dmeta reveal">
+        <div class="idx">i.</div>
+        <div class="t">獨善其身</div>
+        <div class="en">Egocentric · Self-Reflect</div>
+        <p>這件作品來自一場自我探索。我把所有與我有關的字詞層層堆疊，組成一扇窗；讓人透過這些字，看見「我是誰」。而我的人格有許多不同的面向，於是我用<b style="color:var(--fg);font-weight:500">多重曝光</b>作為主視覺，讓不同的自己在同一張臉上重疊。</p>
+      </div>
+    </div>
+
+    <div class="drow flip">
+      <figure class="dfig reveal"><img src="images/design/within-my-grasp.jpg" alt="Within My Grasp 玫瑰拼貼設計"></figure>
+      <div class="dmeta reveal">
+        <div class="idx">ii.</div>
+        <div class="t">Within My Grasp</div>
+        <div class="en">Self-Portrait</div>
+        <p>我總喜歡把所有事物掌握在手中。於是我以「手握玫瑰」的影像為基底，將對我重要的照片與寫過的文章上色，再把它們<b style="color:var(--fg);font-weight:500">解構、重組</b>——最後，長成了我。</p>
+      </div>
+    </div>
+
+    <div class="drow">
+      <figure class="dfig reveal"><img src="images/design/night-sky.jpg" alt="夜空 NIGHT SKY 專輯封面"></figure>
+      <div class="dmeta reveal">
+        <div class="idx">iii.</div>
+        <div class="t">夜空 Night Sky</div>
+        <div class="en">Album Cover</div>
+        <p>為《夜空》設計的專輯視覺。一顆在顆粒黑裡發光的月，配上寬字距的字標與直排標題——用最少的元素，留住夜的安靜。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========= VIDEO ========= -->
+<section id="video" data-bg="#08201E">
+  <div class="wrap">
+    <div class="section-label reveal"><span class="num">05</span><span class="smallcaps">Video</span><span class="rule"></span></div>
+    <div class="head reveal"><div><h2>影音作品</h2><div class="en">Film &amp; Video</div></div></div>
+    <div class="vgrid">
+      <div class="vcard reveal">
+        <a class="vwrap" href="https://youtu.be/NVtI5WUh3P8" target="_blank" rel="noopener" aria-label="Already Broken — 在 YouTube 觀看">
+          <img src="https://img.youtube.com/vi/NVtI5WUh3P8/maxresdefault.jpg" alt="Already Broken 微電影" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/NVtI5WUh3P8/hqdefault.jpg'">
+          <span class="vplay" aria-hidden="true"></span>
+        </a>
+        <div class="vmeta">
+          <div class="t">Already Broken</div>
+          <div class="en">微電影 · Short Film · 2025</div>
+          <p>高三暑假我到德國柏林參與 Metfilm 的電影攝影課程，這是課程的最終作品。我主要擔任攝影與燈光，並負責全部的剪輯、修音與調色。以慢節奏講述一間酒館裡的故事，著重人物的情緒與細節表情。</p>
+          <a class="vlink" href="https://youtu.be/NVtI5WUh3P8" target="_blank" rel="noopener">在 YouTube 觀看 ↗</a>
+        </div>
+      </div>
+      <div class="vcard reveal">
+        <a class="vwrap" href="https://youtu.be/VSuxF93oWOA" target="_blank" rel="noopener" aria-label="我是誰 Who am I? — 在 YouTube 觀看">
+          <img src="https://img.youtube.com/vi/VSuxF93oWOA/maxresdefault.jpg" alt="我是誰 Who am I?" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/VSuxF93oWOA/hqdefault.jpg'">
+          <span class="vplay" aria-hidden="true"></span>
+        </a>
+        <div class="vmeta">
+          <div class="t">我是誰 Who am I?</div>
+          <div class="en">自我介紹 · Self Intro</div>
+          <p>用影像講我自己是誰——攝影、設計、程式，還有一路走來、把興趣一件件變成作品的過程。</p>
+          <a class="vlink" href="https://youtu.be/VSuxF93oWOA" target="_blank" rel="noopener">在 YouTube 觀看 ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========= JOURNEY ========= -->
+<section id="journey" data-bg="#0E2422">
+  <div class="wrap">
+    <div class="section-label reveal"><span class="num">06</span><span class="smallcaps">Journey</span><span class="rule"></span></div>
+    <div class="head reveal"><div><h2>歷程</h2><div class="en">The Path So Far</div></div></div>
+    <div class="timeline">
+      <div class="tl-item reveal"><span class="tl-tick"></span>
+        <div class="tl-phase">Waldorf</div>
+        <div class="tl-title">華德福實驗教育</div>
+        <div class="tl-desc">體制外的華德福教育，我是學校的第一屆學生；在沒有升學壓力的環境裡自由探索，長出了跨領域創作的方向。</div>
+      </div>
+      <div class="tl-item reveal"><span class="tl-tick"></span>
+        <div class="tl-phase">Code</div>
+        <div class="tl-title">程式啟蒙 · 高一暑假</div>
+        <div class="tl-desc">在 3D 工作室實習第一次接觸程式，著迷於「邏輯 × 創造」的組合，追求的是把成果做出來。</div>
+      </div>
+      <div class="tl-item reveal"><span class="tl-tick"></span>
+        <div class="tl-phase">Photography</div>
+        <div class="tl-title">走進攝影</div>
+        <div class="tl-desc">從一堂選修課入門；高二那年開始用鏡頭表達情緒，攝影成為我說故事的方式。</div>
+      </div>
+      <div class="tl-item reveal"><span class="tl-tick"></span>
+        <div class="tl-phase">Design · Lead</div>
+        <div class="tl-title">學生會 · 第一屆美宣組長</div>
+        <div class="tl-desc">共同創立學生自治會，把攝影美感帶進平面設計，負責專題海報與對外宣傳。</div>
+      </div>
+      <div class="tl-item reveal"><span class="tl-tick"></span>
+        <div class="tl-phase">Stage</div>
+        <div class="tl-title">戲劇公演《自白》</div>
+        <div class="tl-desc">改編自《哈姆雷特》的高三公演，兼任主演、燈光與海報設計——重新認識了專注於結果的自己。</div>
+      </div>
+      <div class="tl-item reveal"><span class="tl-tick"></span>
+        <div class="tl-phase">Berlin</div>
+        <div class="tl-title">柏林 · 電影短期留學</div>
+        <div class="tl-desc">獨自到柏林生活一個月，參與 Metfilm 電影攝影課程；在孤獨與陌生裡，學會把事情完成。</div>
+      </div>
+      <div class="tl-item reveal"><span class="tl-tick"></span>
+        <div class="tl-phase">Now · 2026</div>
+        <div class="tl-title">世新大學 圖文傳播學系</div>
+        <div class="tl-desc">目前就讀、準備升上二年級，一年級下學期拿下系排第一。持續在攝影、設計與程式之間，把想法做成作品。</div>
+      </div>
+      <div class="tl-item reveal"><span class="tl-tick"></span>
+        <div class="tl-phase">Award · 2026</div>
+        <div class="tl-title">全國學生攝影比賽 · 大專組 金獎</div>
+        <div class="tl-desc">攝影作品《為什麼天空中間不能是一條河》以多重曝光把城市天際線鏡射成河，於 2026 年獲全國學生攝影比賽大專組金獎。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========= CONTACT ========= -->
+<section id="contact" data-bg="#05100E">
+  <div class="wrap">
+    <div class="lead reveal">Let's make something.</div>
+    <h2 class="reveal">拍一張照片、做一個東西，<br>或只是聊聊光。</h2>
+    <p class="sub reveal">攝影、設計、網頁小專案都歡迎聊聊。<br>影像作品持續更新在 YouTube。</p>
+    <div class="links reveal">
+      <a class="btn btn-solid" href="https://www.youtube.com/@lighter2597" target="_blank" rel="noopener">YouTube · @lighter2597</a>
+      <a class="btn btn-ghost" href="mailto:pangyi681@gmail.com">Email</a>
+    </div>
+    <div class="slogan-strip reveal">You don't take a photo, you make it.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <div class="b"><span class="lt">LT</span><span class="nm">Shuttered Light · by Lighter</span></div>
+    <div class="r">© <span id="yr"></span> 劉邦翊 L1ghter</div>
+  </div>
+</footer>
+</div><!-- /#page -->
+
+<div class="vwr" id="viewer" role="dialog" aria-modal="true" aria-label="作品放大檢視">
+  <span class="lb-close" id="vClose" aria-label="關閉">✕</span>
+  <span class="lb-nav lb-prev" id="vPrev" aria-label="上一件">‹</span>
+  <img class="v-img" id="vImg" alt="">
+  <span class="lb-nav lb-next" id="vNext" aria-label="下一件">›</span>
+  <div class="v-count" id="vCount"></div>
+  <aside class="v-panel"><div class="v-panelbody" id="vPanelBody"></div></aside>
+</div>
+
+<script>
+  document.documentElement.classList.add('has-js');
+
+  const hd=document.getElementById('hd');
+  const onScroll=()=>hd.classList.toggle('solid', window.scrollY>40);
+  onScroll(); addEventListener('scroll',onScroll,{passive:true});
+  document.getElementById('yr').textContent=new Date().getFullYear();
+
+  // mobile nav
+  const navToggle=document.getElementById('navToggle'), navMobile=document.getElementById('navMobile');
+  if(navToggle){
+    const toggleNav=(open)=>{ const o=(open===undefined)?!navMobile.classList.contains('open'):open;
+      navMobile.classList.toggle('open',o); navToggle.classList.toggle('open',o);
+      document.documentElement.classList.toggle('menu-open',o);
+      navToggle.setAttribute('aria-expanded',o); };
+    navToggle.addEventListener('click',(e)=>{ e.stopPropagation(); toggleNav(); });
+    navMobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggleNav(false)));
+    document.addEventListener('click',(e)=>{ if(navMobile.classList.contains('open') && !navMobile.contains(e.target) && e.target!==navToggle) toggleNav(false); });
+  }
+
+  // reveal
+  const items=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1, rootMargin:'0px 0px -8% 0px'});
+    items.forEach((el,i)=>{ el.style.transitionDelay=(Math.min(i%3,2)*70)+'ms'; io.observe(el); });
+  } else { items.forEach(el=>el.classList.add('in')); }
+
+  // ---- photo masonry + category filter ----
+  const grid=document.querySelector('.pmasonry');
+  let curFilter='all';
+  function layoutMasonry(){
+    if(!grid) return;
+    if(!grid.__all) grid.__all=[...grid.querySelectorAll('.m')];
+    const items=grid.__all.filter(m=>curFilter==='all'||m.dataset.cat===curFilter);
+    grid.__items=items;                       // lightbox navigates the visible set
+    const cw=grid.clientWidth;
+    const cols = cw<600?1:(cw<980?2:3);
+    grid.classList.add('js'); grid.innerHTML='';
+    const colEls=[], colH=new Array(cols).fill(0);
+    for(let i=0;i<cols;i++){ const d=document.createElement('div'); d.className='mcol'; grid.appendChild(d); colEls.push(d); }
+    items.forEach(m=>{
+      const img=m.querySelector('img');
+      if(!m._ar) m._ar=(img.naturalWidth&&img.naturalHeight)?(img.naturalWidth/img.naturalHeight):0.7;
+      let k=0; for(let i=1;i<cols;i++) if(colH[i]<colH[k]) k=i;   // shortest column first
+      colEls[k].appendChild(m);
+      colH[k]+=1/m._ar;
+    });
+  }
+  if(grid){
+    grid.__all=[...grid.querySelectorAll('.m')];
+    const imgs=grid.querySelectorAll('img'); let loaded=0;
+    const done=()=>{ if(++loaded>=imgs.length) layoutMasonry(); };
+    imgs.forEach(im=>{ if(im.complete) done(); else { im.addEventListener('load',done); im.addEventListener('error',done);} });
+    layoutMasonry();
+    addEventListener('resize',()=>{ clearTimeout(window.__mz); window.__mz=setTimeout(layoutMasonry,160); });
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(layoutMasonry);
+    const pf=document.getElementById('pfilter');
+    if(pf) pf.addEventListener('click',e=>{ const b=e.target.closest('.pf'); if(!b)return;
+      curFilter=b.dataset.cat; pf.querySelectorAll('.pf').forEach(x=>x.classList.toggle('active',x===b)); layoutMasonry(); });
+  }
+
+  // ---- unified viewer: enlarge + slide-in concept panel (photo / award / design) ----
+  const V=document.getElementById('viewer'), vImg=document.getElementById('vImg'),
+        vCount=document.getElementById('vCount'), vBody=document.getElementById('vPanelBody');
+  let vItems=[], vIdx=0;
+  function vRender(){ const it=vItems[vIdx];
+    const base=it.src.split('/').pop().split('?')[0];        // load hi-res, fall back to thumb
+    vImg.onerror=function(){ vImg.onerror=null; vImg.src=it.src; };
+    vImg.src='images/full/'+base; vImg.alt=it.alt||'';
+    vCount.textContent=String(vIdx+1).padStart(2,'0')+' / '+String(vItems.length).padStart(2,'0');
+    vBody.innerHTML=it.panel||''; const pn=V.querySelector('.v-panel'); if(pn) pn.scrollTop=0; }
+  function vOpen(list,i){ vItems=list; vIdx=(i+list.length)%list.length; vRender(); V.classList.add('open'); document.body.style.overflow='hidden'; }
+  function vClose(){ V.classList.remove('open'); document.body.style.overflow=''; }
+  function vGo(n){ vIdx=(vIdx+n+vItems.length)%vItems.length; vRender(); }
+  document.getElementById('vClose').onclick=vClose;
+  document.getElementById('vPrev').onclick=e=>{e.stopPropagation();vGo(-1);};
+  document.getElementById('vNext').onclick=e=>{e.stopPropagation();vGo(1);};
+  V.addEventListener('click',e=>{ if(e.target===V) vClose(); });
+  addEventListener('keydown',e=>{ if(!V.classList.contains('open'))return;
+    if(e.key==='Escape')vClose(); else if(e.key==='ArrowLeft')vGo(-1); else if(e.key==='ArrowRight')vGo(1); });
+  let tsX=0,tsY=0;   // swipe on mobile
+  V.addEventListener('touchstart',e=>{ tsX=e.touches[0].clientX; tsY=e.touches[0].clientY; },{passive:true});
+  V.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-tsX, dy=e.changedTouches[0].clientY-tsY;
+    if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)*1.4) vGo(dx<0?1:-1); },{passive:true});
+
+  // panel content
+  const PHOTO_PANEL = '<div class="badge">攝影集前言 · Preface</div>'+
+    '<div class="text"><span class="q">鏡頭有兩顆——<br>向前的記錄下畫面，<br>向後的默默記下每一瞬間的故事，<br>偷偷寫進每一個定格的以前。</span>'+
+    '對我而言，攝影是<b>記憶</b>。快門記下的不只是眼前的人，也是按下快門的自己——那些我藏起來、不願面對的心情，都被寫進了畫面。所以我想繼續拍，用只屬於我的觀點看世界，並分享給我在乎的人：<b>我眼裡的世界</b>。</div>';
+  const AWARD_PANEL = '<div class="badge">全國學生攝影比賽 · 大專組 金獎</div>'+
+    '<div class="title">《為什麼天空中間不能是一條河》</div>'+
+    '<div class="text"><span class="q">「如果天空平常是藍色的，河流也是；日出日落時，天空映照出的顏色也渲染在河面上。那，天空中間為什麼不能是一條河？」</span>'+
+    '本作品以此發想，利用<b>多重曝光與疊圖</b>的技巧，將城市剪影、眷村小屋都成了河岸；絢麗的天空則成了河流。至此，天地反轉的世界裡，流過了一條河。</div>';
+
+  // photo → viewer (uses currently-visible/filtered set)
+  document.querySelector('.pmasonry').addEventListener('click',e=>{
+    const m=e.target.closest('.m'); if(!m) return;
+    const els=(grid&&grid.__items)?grid.__items:[...document.querySelectorAll('.pmasonry .m')];
+    const list=els.map(x=>({src:x.querySelector('img').src, alt:x.querySelector('img').alt, panel:PHOTO_PANEL}));
+    vOpen(list, els.indexOf(m));
+  });
+
+  // award → viewer
+  const awardEls=[...document.querySelectorAll('#award .ac')];
+  const awardItems=awardEls.map(a=>({src:a.querySelector('img').src, alt:a.querySelector('img').alt, panel:AWARD_PANEL}));
+  awardEls.forEach((a,i)=>a.addEventListener('click',()=>vOpen(awardItems,i)));
+
+  // design → viewer (per-item concept, read from the section)
+  const designRows=[...document.querySelectorAll('#design .drow')];
+  const designItems=designRows.map(r=>{
+    const img=r.querySelector('.dfig img'), t=r.querySelector('.dmeta .t').textContent,
+          en=r.querySelector('.dmeta .en').textContent, p=r.querySelector('.dmeta p').innerHTML;
+    return {src:img.src, alt:img.alt, panel:'<div class="badge">設計作品 · Design</div><div class="title">'+t+'</div><div class="en">'+en+'</div><div class="text">'+p+'</div>'};
+  });
+  designRows.forEach((r,i)=>r.querySelector('.dfig').addEventListener('click',()=>vOpen(designItems,i)));
+
+  // about (Berlin) → viewer
+  const berlinText='「起初的新鮮很快被孤獨與自我懷疑取代，直到我把這趟旅程重新定義為『學習與體驗』，一切才慢慢輕鬆起來。」——柏林教我的，不只是電影，而是怎麼在完全陌生的地方，把自己安頓好、把想做的事完成。';
+  const aboutMeta=[
+    {t:'柏林 · 布蘭登堡門', en:'Berlin'},
+    {t:'柏林 · 街頭', en:'Berlin'}
+  ];
+  const aboutEls=[...document.querySelectorAll('#about .af')];
+  const aboutItems=aboutEls.map((f,i)=>({src:f.querySelector('img').src, alt:f.querySelector('img').alt,
+    panel:'<div class="badge">關於 · Berlin</div><div class="title">'+aboutMeta[i].t+'</div><div class="en">'+aboutMeta[i].en+'</div><div class="text">'+berlinText+'</div>'}));
+  aboutEls.forEach((f,i)=>f.addEventListener('click',()=>vOpen(aboutItems,i)));
+
+  // ---- scroll-driven background colour + hero transition (offsets cached to avoid jank) ----
+  const bgEls=[...document.querySelectorAll('section[data-bg]')];
+  const cols=bgEls.map(s=>s.dataset.bg.replace('#','').match(/../g).map(h=>parseInt(h,16)));
+  const heroBg=document.querySelector('.hero-bg'), heroInner=document.querySelector('.hero-inner'), heroSec=document.getElementById('top');
+  let tops=[], heroH=window.innerHeight, ticking=false;
+  function measure(){ tops=bgEls.map(s=>s.offsetTop); heroH=heroSec?heroSec.offsetHeight:window.innerHeight; }
+  function frame(){
+    ticking=false;
+    const sy=window.scrollY, y=sy+window.innerHeight*0.4;
+    let a=0; for(let i=0;i<tops.length;i++){ if(tops[i]<=y) a=i; }
+    const b=Math.min(a+1,tops.length-1), y0=tops[a], y1=tops[b];
+    let t=y1>y0?(y-y0)/(y1-y0):0; t=t<0?0:t>1?1:t;
+    const ca=cols[a], cb=cols[b];
+    document.body.style.backgroundColor='rgb('+Math.round(ca[0]+(cb[0]-ca[0])*t)+','+Math.round(ca[1]+(cb[1]-ca[1])*t)+','+Math.round(ca[2]+(cb[2]-ca[2])*t)+')';
+    if(heroBg && sy<heroH){ const p=sy/heroH;
+      heroBg.style.transform='scale('+(1+p*0.09).toFixed(3)+')';
+      if(heroInner){ heroInner.style.opacity=(1-p*1.2<0?0:1-p*1.2).toFixed(3); heroInner.style.transform='translateY('+(p*44).toFixed(1)+'px)'; }
+    }
+  }
+  function req(){ if(!ticking){ ticking=true; requestAnimationFrame(frame); } }
+  addEventListener('scroll',req,{passive:true});
+  addEventListener('resize',()=>{ measure(); req(); });
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ measure(); req(); });
+  measure(); frame();
+</script>
+</body>
+</html>
