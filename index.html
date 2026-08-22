@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Lighter — Shuttered Light</title>
 <meta name="description" content="劉邦翊 L1ghter — 攝影 × 設計 × 程式的跨領域創作者。Shuttered Light 截光。">
 <!-- 分享預覽 -->
@@ -49,6 +49,7 @@ section{padding:clamp(80px,11vw,150px) 0; position:relative}
 /* nav */
 header{position:fixed; top:0; left:0; right:0; z-index:50; border-bottom:1px solid transparent; transition:background .4s, border-color .4s}
 header.solid{background:rgba(9,20,20,.8); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+header{padding-top:env(safe-area-inset-top)}
 .nav{max-width:min(1720px,96vw); margin:0 auto; padding:20px clamp(26px,5vw,72px); display:flex; align-items:center; justify-content:space-between}
 .brand{display:flex; align-items:baseline; gap:12px}
 .brand .lt{font-family:var(--serif-en); font-weight:600; font-size:22px; color:var(--teal-bright); letter-spacing:.02em}
@@ -60,7 +61,7 @@ header.solid{background:rgba(9,20,20,.8); backdrop-filter:blur(12px); border-bot
 .nav-toggle span{display:block; width:26px; height:1.5px; background:var(--fg); transition:transform .3s, opacity .3s}
 .nav-toggle.open span:nth-child(1){transform:translateY(3.75px) rotate(45deg)}
 .nav-toggle.open span:nth-child(2){transform:translateY(-3.75px) rotate(-45deg)}
-.nav-mobile{position:fixed; top:0; right:0; height:100%; width:min(216px,66vw); z-index:48; background:rgba(9,20,20,.62); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-left:1px solid var(--line); padding:88px 0 30px; display:flex; flex-direction:column; gap:2px; transform:translateX(100%); transition:transform .42s cubic-bezier(.2,.7,.2,1); box-shadow:-18px 0 55px rgba(0,0,0,.4)}
+.nav-mobile{position:fixed; top:0; right:0; height:100%; width:min(216px,66vw); z-index:48; background:rgba(9,20,20,.62); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-left:1px solid var(--line); padding:calc(84px + env(safe-area-inset-top)) 0 30px; display:flex; flex-direction:column; gap:2px; transform:translateX(100%); transition:transform .42s cubic-bezier(.2,.7,.2,1); box-shadow:-18px 0 55px rgba(0,0,0,.4)}
 .nav-mobile.open{transform:none}
 .nav-mobile a{display:flex; align-items:center; justify-content:center; gap:12px; padding:13px 20px; font-family:var(--serif-tc); font-weight:400; font-size:16px; letter-spacing:.12em; color:var(--paper)}
 .nav-mobile a svg{width:18px; height:18px; fill:none; stroke:var(--teal-bright); stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; opacity:.85; flex:none}
@@ -142,6 +143,15 @@ header.solid{background:rgba(9,20,20,.8); backdrop-filter:blur(12px); border-bot
 .pf{font-family:var(--sans); font-size:13px; letter-spacing:.12em; color:var(--fg-dim); background:transparent; border:1px solid var(--line); padding:9px 18px; border-radius:8px; cursor:pointer; transition:all .25s}
 .pf:hover{color:var(--fg); border-color:var(--line-strong)}
 .pf.active{color:#04110f; background:var(--teal-bright); border-color:var(--teal-bright); font-weight:500}
+.pmasonry-wrap{position:relative}
+.photo-more{display:none}
+@media(max-width:600px){
+  .pmasonry-wrap:not(.expanded){max-height:1700px; overflow:hidden}
+  .pmasonry-wrap:not(.expanded)::after{content:""; position:absolute; left:0; right:0; bottom:0; height:220px; background:linear-gradient(to bottom, rgba(18,48,50,0), rgba(18,48,50,.85) 60%, #123032); pointer-events:none}
+  .photo-more{display:block; margin:22px auto 0; font-family:var(--sans); font-size:14px; letter-spacing:.14em; color:var(--paper); background:transparent; border:1px solid var(--line-strong); border-radius:9px; padding:14px 30px; cursor:pointer}
+  .photo-more:active{border-color:var(--teal-bright); color:var(--teal-bright)}
+  .pmasonry-wrap.expanded ~ .photo-more{display:none}
+}
 .more-link{margin-top:44px; text-align:center}
 .more-link a{font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--fg-dim); border-bottom:1px solid var(--line); padding-bottom:6px; transition:.25s}
 .more-link a:hover{color:var(--teal-bright); border-color:var(--teal-bright)}
@@ -188,13 +198,14 @@ header.solid{background:rgba(9,20,20,.8); backdrop-filter:blur(12px); border-bot
 .v-panel .text .q{display:block; color:var(--paper); border-left:2px solid var(--teal-bright); padding-left:18px; margin-bottom:18px}
 .v-count{}
 @media(max-width:820px){
-  .vwr{justify-content:center; padding:3vh 3vw}
-  .v-img{max-width:92vw; max-height:44vh}
-  .v-panel{width:100%; height:auto; top:auto; bottom:0; padding:30px 26px 38px; transform:translateY(100%)}
+  .vwr{align-items:flex-start; justify-content:center; padding:calc(env(safe-area-inset-top) + 60px) 4vw 40vh}
+  .v-img{max-width:100%; max-height:calc(100vh - env(safe-area-inset-top) - 60px - 40vh - 16px)}
+  .lb-close{width:calc(58px + env(safe-area-inset-top)); height:calc(58px + env(safe-area-inset-top)); padding:calc(12px + env(safe-area-inset-top)) 16px 0 0}
+  .lb-nav{font-size:30px; padding:8px}
+  .v-count{bottom:auto; top:calc(env(safe-area-inset-top) + 20px); left:6vw}
+  .v-panel{left:0; right:0; bottom:0; top:auto; width:100%; height:40vh; max-height:40vh; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:26px 24px calc(30px + env(safe-area-inset-bottom)); border-left:0; border-top:1px solid var(--line); transform:translateY(100%)}
   .vwr.open .v-panel{transform:translateY(0)}
-  .v-panel::before{left:0; right:0; top:-56px; bottom:auto; width:auto; height:56px; background:linear-gradient(to bottom, rgba(14,31,31,0), rgba(14,31,31,.72))}
-  .lb-nav{font-size:30px; padding:10px}
-  .v-count{bottom:auto; top:3vh; left:5vw}
+  .v-panel::before{left:0; right:0; top:-46px; bottom:auto; width:auto; height:46px; background:linear-gradient(to bottom, rgba(14,31,31,0), rgba(14,31,31,.62))}
 }
 
 /* design — alternating feature rows */
@@ -358,7 +369,7 @@ footer{border-top:1px solid var(--line); padding:44px 0}
         <button class="pf" data-cat="bw">黑白</button>
       </div>
     </div>
-    <div class="pmasonry">
+    <div class="pmasonry-wrap" id="pmWrap"><div class="pmasonry">
       <!-- 彩色 -->
       <div class="m reveal" data-cat="color"><img src="images/work-01.jpg" alt="街頭 — 藍傘"></div>
       <div class="m reveal" data-cat="color"><img src="images/work-05.jpg" alt="祭典紅燈籠"></div>
@@ -395,7 +406,8 @@ footer{border-top:1px solid var(--line); padding:44px 0}
       <div class="m reveal" data-cat="bw"><img src="images/photo/bw-05.jpg" alt="拱廊"></div>
       <div class="m reveal" data-cat="bw"><img src="images/photo/bw-06.jpg" alt="城市邊緣"></div>
       <div class="m reveal" data-cat="bw"><img src="images/photo/bw-08.jpg" alt="建築"></div>
-    </div>
+    </div></div>
+    <button class="photo-more" id="photoMore">查看更多攝影作品</button>
     <div class="more-link reveal"><a href="https://www.instagram.com/lighter__photography/" target="_blank" rel="noopener">更多影像作品 · Instagram</a></div>
   </div>
 </section>
@@ -638,6 +650,8 @@ footer{border-top:1px solid var(--line); padding:44px 0}
     const pf=document.getElementById('pfilter');
     if(pf) pf.addEventListener('click',e=>{ const b=e.target.closest('.pf'); if(!b)return;
       curFilter=b.dataset.cat; pf.querySelectorAll('.pf').forEach(x=>x.classList.toggle('active',x===b)); layoutMasonry(); });
+    const pmWrap=document.getElementById('pmWrap'), photoMore=document.getElementById('photoMore');
+    if(photoMore&&pmWrap) photoMore.addEventListener('click',()=>{ pmWrap.classList.add('expanded'); });
   }
 
   // ---- unified viewer: enlarge + slide-in concept panel (photo / award / design) ----
