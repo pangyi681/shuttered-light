@@ -2,8 +2,8 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0E1F1F"><!-- 內容不鑽進瀏海/Home 列（拿掉 viewport-fit=cover），那兩塊交給系統用此純色填；JS 會隨情境更新 -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1F1F"><!-- 非 Safari 會吃這個純色填瀏海/工具列；JS 隨情境更新（Safari 分頁不理，已接受） -->
 <title>Lighter — Shuttered Light</title>
 <meta name="description" content="劉邦翊 L1ghter — 攝影 × 設計 × 程式的跨領域創作者。Shuttered Light 截光。">
 <!-- 分享預覽 -->
@@ -48,7 +48,7 @@ section{padding:clamp(80px,11vw,150px) 0; position:relative}
 .section-label .rule{flex:1; height:1px; background:var(--line)}
 
 /* nav */
-header{position:fixed; top:0; left:0; right:0; z-index:50; border-bottom:1px solid transparent; transition:background .4s, border-color .4s}
+header{position:fixed; top:0; left:0; right:0; z-index:50; border-bottom:1px solid transparent; transition:background .4s, border-color .4s, transform .35s cubic-bezier(.2,.7,.2,1)}
 header.solid{background:rgba(9,20,20,.8); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
 header{padding-top:env(safe-area-inset-top)}
 .nav{max-width:min(1720px,96vw); margin:0 auto; padding:20px clamp(26px,5vw,72px); display:flex; align-items:center; justify-content:space-between}
@@ -72,6 +72,7 @@ header{padding-top:env(safe-area-inset-top)}
   .nav ul{display:none} .nav-toggle{display:flex}
   html.menu-open{overflow:hidden} html.menu-open #page{transform:translateX(-18px)}
   header{background:#0b1919; border-bottom:1px solid var(--line)}  /* 頂欄實色，蓋住瀏海與捲動內容 */
+  header.hd-hidden{transform:translateY(-100%)}                    /* 下滑收起、上滑才出現 */
   .brand .nm{display:none}                                          /* 手機拿掉標題，只留 LT */
   .edge-bottom{display:block}                                       /* 底部 Home 列實色蓋條 */
 }
@@ -169,6 +170,7 @@ header{padding-top:env(safe-area-inset-top)}
 .award-badge{display:inline-flex; align-items:center; gap:10px; margin-bottom:20px; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold)}
 .award-badge::before{content:""; width:26px; height:1px; background:var(--gold)}
 .award-title{font-family:var(--serif-tc); font-weight:500; font-size:clamp(22px,3.2vw,30px); color:var(--paper); letter-spacing:.06em; margin:0 0 20px}
+@media(max-width:600px){ .award-title{font-size:clamp(15px,4.4vw,20px); letter-spacing:.02em; white-space:nowrap} } /* 手機版標題保持一行 */
 .award-lead p{color:var(--fg-dim); font-family:var(--serif-tc); font-weight:300; font-size:16px; line-height:2.05; margin:0}
 .award-lead .q{color:var(--fg); border-left:2px solid var(--teal-bright); padding-left:18px; margin-bottom:18px; display:block}
 .agrid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
@@ -616,7 +618,16 @@ footer{border-top:1px solid var(--line); padding:44px 0}
   document.documentElement.classList.add('has-js');
 
   const hd=document.getElementById('hd');
-  const onScroll=()=>hd.classList.toggle('solid', window.scrollY>40);
+  let lastY=window.scrollY;
+  const onScroll=()=>{
+    const y=window.scrollY;
+    hd.classList.toggle('solid', y>40);
+    if(!document.documentElement.classList.contains('menu-open')){       // 下滑收起頂欄、上滑或到頂才出現
+      if(y>lastY && y>90) hd.classList.add('hd-hidden');
+      else hd.classList.remove('hd-hidden');
+    }
+    lastY=y;
+  };
   onScroll(); addEventListener('scroll',onScroll,{passive:true});
   document.getElementById('yr').textContent=new Date().getFullYear();
 
