@@ -218,6 +218,12 @@ header{padding-top:env(safe-area-inset-top)}
   .v-panel .en{font-size:10px; margin-bottom:14px}
   .v-panel .text{font-size:13px; line-height:1.8}
   .v-panel .text .q{padding-left:14px; margin-bottom:13px}
+  /* 攝影燈箱：純圖、垂直置中、加深模糊背景，不顯示說明文字 */
+  .vwr.is-photo{justify-content:center; background:rgba(4,10,9,.975); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px)}
+  .vwr.is-photo .v-panel{display:none}
+  .vwr.is-photo .v-img{margin:0 auto; max-height:84vh}
+  /* 其他燈箱：橫式作品往下放、約在中間 */
+  .vwr.is-wide:not(.is-photo) .v-img{margin-top:calc(env(safe-area-inset-top) + 13vh)}
 }
 
 /* design — alternating feature rows */
@@ -674,7 +680,10 @@ footer{border-top:1px solid var(--line); padding:44px 0}
   let vItems=[], vIdx=0;
   function vRender(){ const it=vItems[vIdx];
     const base=it.src.split('/').pop().split('?')[0];        // load hi-res, fall back to thumb
+    V.classList.toggle('is-photo', it.kind==='photo');       // 手機版攝影燈箱：純圖無字
+    V.classList.remove('is-wide');
     vImg.onerror=function(){ vImg.onerror=null; vImg.src=it.src; };
+    vImg.onload=function(){ V.classList.toggle('is-wide', this.naturalWidth>this.naturalHeight); }; // 橫式圖往下置中
     vImg.src='images/full/'+base; vImg.alt=it.alt||'';
     vCount.textContent=String(vIdx+1).padStart(2,'0')+' / '+String(vItems.length).padStart(2,'0');
     vBody.innerHTML=it.panel||''; const pn=V.querySelector('.v-panel'); if(pn) pn.scrollTop=0; }
@@ -705,7 +714,7 @@ footer{border-top:1px solid var(--line); padding:44px 0}
   document.querySelector('.pmasonry').addEventListener('click',e=>{
     const m=e.target.closest('.m'); if(!m) return;
     const els=(grid&&grid.__items)?grid.__items:[...document.querySelectorAll('.pmasonry .m')];
-    const list=els.map(x=>({src:x.querySelector('img').src, alt:x.querySelector('img').alt, panel:PHOTO_PANEL}));
+    const list=els.map(x=>({src:x.querySelector('img').src, alt:x.querySelector('img').alt, panel:PHOTO_PANEL, kind:'photo'}));
     vOpen(list, els.indexOf(m));
   });
 
