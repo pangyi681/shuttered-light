@@ -921,7 +921,7 @@ footer{border-top:1px solid var(--line); padding:44px 0}
   aboutEls.forEach((f,i)=>f.addEventListener('click',()=>vOpen(aboutItems,i)));
 
   // ---- 接案聯絡表單（送到 Formspree；FORM_ENDPOINT 貼上網址後即生效）----
-  const FORM_ENDPOINT='';   // TODO: 貼上 https://formspree.io/f/xxxxxxx
+  const FORM_ENDPOINT='https://formspree.io/f/myeygyyj';   // Formspree 接案聯絡表單
   const svcForm=document.getElementById('svcForm');
   if(svcForm){
     svcForm.addEventListener('submit', async e=>{
