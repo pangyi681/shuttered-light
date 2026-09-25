@@ -340,6 +340,8 @@ header{padding-top:env(safe-area-inset-top)}
 #contact .sub{font-family:var(--serif-tc); font-weight:300; color:var(--fg-dim); max-width:34ch; margin:0 auto 46px; font-size:16px; line-height:2}
 .links{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:56px}
 .slogan-strip{font-family:var(--serif-tc); font-weight:300; font-size:clamp(15px,2.2vw,20px); color:var(--slate); letter-spacing:.14em}
+#ebooks .sub{font-family:var(--serif-tc); font-weight:300; color:var(--fg-dim); max-width:480px; font-size:16px; line-height:1.9; margin:0 0 36px}
+#ebooks .links{justify-content:flex-start; margin-bottom:0}
 
 /* footer */
 footer{border-top:1px solid var(--line); padding:44px 0}
@@ -377,6 +379,7 @@ footer{border-top:1px solid var(--line); padding:44px 0}
       <li><a href="#award">得獎</a></li>
       <li><a href="#design">設計</a></li>
       <li><a href="#video">影音</a></li>
+      <li><a href="#ebooks">電子書</a></li>
       <li><a href="#journey">歷程</a></li>
       <li><a href="#services">服務</a></li>
       <li><a href="#contact">聯絡</a></li>
@@ -390,6 +393,7 @@ footer{border-top:1px solid var(--line); padding:44px 0}
   <a href="#award"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13l-1.5 7L12 17l4.5 3L15 13"/></svg><span>得獎</span></a>
   <a href="#design"><svg viewBox="0 0 24 24"><path d="M4 20l1-4L15.5 5.5l3 3L8 19z"/><path d="M13.5 7l3 3"/></svg><span>設計</span></a>
   <a href="#video"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg><span>影音</span></a>
+  <a href="#ebooks"><svg viewBox="0 0 24 24"><path d="M4 5.5c2-1 5-1 8 0v13c-3-1-6-1-8 0z"/><path d="M20 5.5c-2-1-5-1-8 0v13c3-1 6-1 8 0z"/></svg><span>電子書</span></a>
   <a href="#journey"><svg viewBox="0 0 24 24"><path d="M12 3.5v17"/><circle cx="12" cy="6" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="18" r="1.7"/></svg><span>歷程</span></a>
   <a href="#services"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5.5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5.5V7"/><path d="M3 12h18"/></svg><span>服務</span></a>
   <a href="#contact"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/></svg><span>聯絡</span></a>
@@ -591,10 +595,22 @@ footer{border-top:1px solid var(--line); padding:44px 0}
   </div>
 </section>
 
+<!-- ========= EBOOKS ========= -->
+<section id="ebooks" data-bg="#0C231F">
+  <div class="wrap">
+    <div class="section-label reveal"><span class="num">06</span><span class="smallcaps">Ebooks</span><span class="rule"></span></div>
+    <div class="head reveal"><div><h2>電子書</h2><div class="en">Digital Editions</div></div></div>
+    <p class="sub reveal">想看更多完整作品嗎？這裡另外做了一個空間，把攝影集、專題報告都做成可以直接翻閱的電子書——像拿著一本真的書，一頁一頁看完整個故事。</p>
+    <div class="links reveal">
+      <a class="btn btn-solid" href="https://shuttered-light-ebooks.pages.dev" target="_blank" rel="noopener">進入雜記空間 ↗</a>
+    </div>
+  </div>
+</section>
+
 <!-- ========= JOURNEY ========= -->
 <section id="journey" data-bg="#0E2422">
   <div class="wrap">
-    <div class="section-label reveal"><span class="num">06</span><span class="smallcaps">Journey</span><span class="rule"></span></div>
+    <div class="section-label reveal"><span class="num">07</span><span class="smallcaps">Journey</span><span class="rule"></span></div>
     <div class="head reveal"><div><h2>歷程</h2><div class="en">The Path So Far</div></div></div>
     <div class="timeline">
       <div class="tl-item reveal"><span class="tl-tick"></span>
@@ -644,7 +660,7 @@ footer{border-top:1px solid var(--line); padding:44px 0}
 <!-- ========= SERVICES / HIRE ========= -->
 <section id="services" data-bg="#0A1C1B">
   <div class="wrap">
-    <div class="section-label reveal"><span class="num">07</span><span class="smallcaps">Services</span><span class="rule"></span></div>
+    <div class="section-label reveal"><span class="num">08</span><span class="smallcaps">Services</span><span class="rule"></span></div>
     <div class="head reveal"><div><h2>合作 · 接案</h2><div class="en">Work <b>With Me</b></div></div></div>
     <p class="svc-intro reveal">從一張照片、一張海報，到一個能動的網頁——我用<b>攝影</b>、<b>設計</b>與<b>程式</b>，把想法變成看得到、也用得到的成品。有需求，我們先聊聊。</p>
 
