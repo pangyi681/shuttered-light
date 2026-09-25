@@ -342,6 +342,13 @@ header{padding-top:env(safe-area-inset-top)}
 .slogan-strip{font-family:var(--serif-tc); font-weight:300; font-size:clamp(15px,2.2vw,20px); color:var(--slate); letter-spacing:.14em}
 #ebooks .sub{font-family:var(--serif-tc); font-weight:300; color:var(--fg-dim); max-width:480px; font-size:16px; line-height:1.9; margin:0 0 36px}
 #ebooks .links{justify-content:flex-start; margin-bottom:0}
+.ebooks-grid{display:grid; grid-template-columns:.85fr 1.15fr; gap:clamp(34px,6vw,80px); align-items:center}
+.ebooks-covers{display:flex; gap:14px}
+.ecov{position:relative; flex:1; padding:8px; border:1px solid var(--line); background:rgba(255,255,255,.02); transition:border-color .35s, transform .35s}
+.ecov:hover{border-color:var(--teal-bright); transform:translateY(-4px)}
+.ecov img{width:100%; height:auto; display:block; box-shadow:0 14px 34px -14px rgba(0,0,0,.6)}
+@media(max-width:820px){ .ebooks-grid{grid-template-columns:1fr; gap:38px} }
+@media(max-width:480px){ .ebooks-covers{gap:9px} .ecov{padding:5px} }
 
 /* footer */
 footer{border-top:1px solid var(--line); padding:44px 0}
@@ -599,10 +606,25 @@ footer{border-top:1px solid var(--line); padding:44px 0}
 <section id="ebooks" data-bg="#0C231F">
   <div class="wrap">
     <div class="section-label reveal"><span class="num">06</span><span class="smallcaps">Ebooks</span><span class="rule"></span></div>
-    <div class="head reveal"><div><h2>電子書</h2><div class="en">Digital Editions</div></div></div>
-    <p class="sub reveal">想看更多完整作品嗎？這裡另外做了一個空間，把攝影集、專題報告都做成可以直接翻閱的電子書——像拿著一本真的書，一頁一頁看完整個故事。</p>
-    <div class="links reveal">
-      <a class="btn btn-solid" href="https://shuttered-light-ebooks.pages.dev" target="_blank" rel="noopener">進入雜記空間 ↗</a>
+    <div class="ebooks-grid">
+      <div class="ebooks-covers reveal">
+        <a class="ecov" href="https://shuttered-light-ebooks.pages.dev/book.html?id=xiaode-photobook" target="_blank" rel="noopener">
+          <img src="https://shuttered-light-ebooks.pages.dev/images/xiaode-photobook/page-01.jpg" alt="Shuttered Light 攝影集封面" loading="lazy">
+        </a>
+        <a class="ecov" href="https://shuttered-light-ebooks.pages.dev/book.html?id=fragments-of-light" target="_blank" rel="noopener">
+          <img src="https://shuttered-light-ebooks.pages.dev/images/fragments-of-light/page-01.jpg" alt="Fragments of Light 封面" loading="lazy">
+        </a>
+        <a class="ecov" href="https://shuttered-light-ebooks.pages.dev/book.html?id=xiaode-report" target="_blank" rel="noopener">
+          <img src="https://shuttered-light-ebooks.pages.dev/images/xiaode-report/page-01.jpg" alt="截光．攝影 專題報告封面" loading="lazy">
+        </a>
+      </div>
+      <div class="ebooks-body">
+        <div class="head reveal"><div><h2>更多完整作品</h2><div class="en">Digital Editions</div></div></div>
+        <p class="sub reveal">想看更多完整作品嗎？這裡另外做了一個空間，把攝影集、專題報告都做成可以直接翻閱的電子書——像拿著一本真的書，一頁一頁看完整個故事。</p>
+        <div class="links reveal">
+          <a class="btn btn-solid" href="https://shuttered-light-ebooks.pages.dev" target="_blank" rel="noopener">進入雜記空間 ↗</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
